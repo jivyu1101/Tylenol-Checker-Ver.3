@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>타이레놀 500mg 정 복용 가능 여부 체크기</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'IBM Plex Sans KR', sans-serif;
+      background-color: #d62828;
+      color: #000;
+    }
+    .header {
+      text-align: center;
+      padding: 30px 20px 10px;
+      color: white;
+      font-size: 36px;
+      font-weight: bold;
+    }
+    .subheader {
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .question-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #d62828;
+      margin-bottom: 10px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .highlight-box {
+      background-color: #ffe5e5;
+      border-left: 5px solid red;
+      padding: 10px;
+      margin-top: 20px;
+    }
+    .red-text {
+      color: red;
+      font-weight: bold;
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+    }
+    button {
+      background-color: #d62828;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    @media screen and (max-width: 640px) {
+      .container {
+        margin: 20px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">타이레놀 500mg 정 복용 가능 여부 체크기</div>
+  <div class="subheader">복용 체크기</div>
+
+  <div class="container">
+    <form id="survey">
+      <div id="q1" class="question">
+        <div class="question-title">1단계: 연령 확인</div>
+        <label><input type="radio" name="age" value="under"> 만 11세 이하</label>
+        <label><input type="radio" name="age" value="over"> 만 12세 이상</label>
+      </div>
+
+      <div id="q2" class="question hidden">
+        <div class="question-title">2단계: 위험 징후 체크</div>
+        <label><input type="checkbox" name="danger" value="warn"> 심한 구토/복통</label>
+        <label><input type="checkbox" name="danger" value="warn"> 피부에 붉은 발진</label>
+        <label><input type="checkbox" name="danger" value="warn"> 숨이 차거나 호흡 곤란</label>
+        <label><input type="checkbox" name="danger" value="warn"> 39도 이상의 고열이 2일 이상 지속</label>
+        <label><input type="checkbox" name="danger" value="ok"> 없음</label>
+      </div>
+
+      <div id="q3" class="question hidden">
+        <div class="question-title">3단계: 증상 체크</div>
+        <label><input type="checkbox" name="symptom" value="valid"> 발열</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 감기로 인한 통증</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 두통</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 신경통/근육통/관절통</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 월경통</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 염좌통(삔 통증)</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 치통</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 류마티양으로 인한 통증</label>
+        <label><input type="checkbox" name="symptom" value="invalid"> 기타</label>
+      </div>
+
+      <div id="q4" class="question hidden">
+        <div class="question-title">4단계: 건강 상태 확인</div>
+        <label><input type="checkbox" name="health" value="warn"> 임부/수유부</label>
+        <label><input type="checkbox" name="health" value="warn"> 알코올 복용 여부</label>
+        <label><input type="checkbox" name="health" value="warn"> 만성질환</label>
+        <label><input type="checkbox" name="health" value="warn"> 소염(항염)진통제 복용 여부</label>
+        <label><input type="checkbox" name="health" value="ok"> 없음</label>
+      </div>
+
+      <div id="result" class="question hidden">
+        <div class="highlight-box">
+          <p class="red-text">‘타이레놀 500mg’을 복용해도 좋습니다.</p>
+          <p class="red-text">1회 1~2정씩 1일 3-4회 (4-6시간 마다) 복용하세요.</p>
+        </div>
+        <p>의사나 약사의 지시 없이 통증에 성인(만 19세 이상)은 10일 이상, 소아(만 19세 미만)는 5일 이상 복용하지 않고, 발열에 3일 이상 복용하지 않습니다.</p>
+      </div>
+
+      <div id="ending" class="question hidden">
+        <p>이런 증상은 병원 진료가 필요할 수 있습니다.</p>
+      </div>
+
+      <button type="button" onclick="nextStep()">다음</button>
+    </form>
+  </div>
+
+  <script>
+    let step = 1;
+
+    function nextStep() {
+      if (step === 1) {
+        const age = document.querySelector('input[name="age"]:checked');
+        if (!age) return;
+        if (age.value === "under") return showEnding("만 12세 이상부터 이 약을 복용할 수 있습니다");
+        document.getElementById('q1').classList.add('hidden');
+        document.getElementById('q2').classList.remove('hidden');
+        step++;
+
+      } else if (step === 2) {
+        const danger = [...document.querySelectorAll('input[name="danger"]:checked')];
+        if (danger.some(d => d.value === "warn")) return showEnding();
+        document.getElementById('q2').classList.add('hidden');
+        document.getElementById('q3').classList.remove('hidden');
+        step++;
+
+      } else if (step === 3) {
+        const symptoms = [...document.querySelectorAll('input[name="symptom"]:checked')];
+        if (symptoms.some(s => s.value === "invalid")) return showEnding("지금 이 약을 복용하는 것은 증상 개선에 도움이 되지 않습니다");
+        if (symptoms.length === 0) return;
+        document.getElementById('q3').classList.add('hidden');
+        document.getElementById('q4').classList.remove('hidden');
+        step++;
+
+      } else if (step === 4) {
+        const health = [...document.querySelectorAll('input[name="health"]:checked')];
+        if (health.some(h => h.value === "warn")) return showEnding("복용 전 약사나 의사에게 상의하시기 바랍니다");
+        document.getElementById('q4').classList.add('hidden');
+        document.getElementById('result').classList.remove('hidden');
+        document.querySelector('button').classList.add('hidden');
+      }
+    }
+
+    function showEnding(msg) {
+      document.getElementById('survey').innerHTML = `<div class='question'><p>${msg || '이런 증상은 병원 진료가 필요할 수 있습니다.'}</p></div>`;
+    }
+  </script>
+</body>
+</html>
