@@ -16,18 +16,21 @@
       text-align: center;
       padding: 30px 20px 10px;
       color: white;
-      font-size: 36px;
+      font-size: 32px;
       font-weight: bold;
+      line-height: 1.4;
     }
     .subheader {
       text-align: center;
-      color: white;
-      font-size: 18px;
+      font-size: 14px;
+      color: #ffe5e5;
+      margin-top: 5px;
       margin-bottom: 20px;
+      padding: 0 10px;
     }
     .container {
       max-width: 600px;
-      margin: 0 auto 30px;
+      margin: 0 auto 10px;
       background: #fff;
       padding: 20px;
       border-radius: 20px;
@@ -69,39 +72,55 @@
       cursor: pointer;
       margin-top: 10px;
     }
+    .result {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-top: 20px;
+    }
+    .highlight-section {
+      background-color: #ffe5e5;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      color: red;
+      font-weight: bold;
+    }
+    .footer-warning {
+      text-align: center;
+      color: #fff;
+      font-size: 13px;
+      padding: 10px;
+      margin: 5px 15px 15px;
+    }
     @media screen and (max-width: 640px) {
       .container {
         margin: 20px;
         padding: 15px;
       }
+      .header {
+        font-size: 24px;
+      }
+      .subheader {
+        font-size: 12px;
+      }
+      .footer-warning {
+        font-size: 12px;
+        margin: 20px 10px 15px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="header">타이레놀 500mg 정 복용 가능 여부 체크기</div>
-  <div class="subheader">복용 체크기</div>
+  <div class="header">타이레놀 500mg정 복용 가능 여부 체크기</div>
+  <div class="subheader">이 점검기는 만 12세 이상을 위해 만들어졌습니다. 만 11세 이하의 어린이는 어린이용 시럽 복용을 권장합니다.</div>
 
   <div class="container">
     <form id="survey">
       <div id="q1" class="question">
-        <div class="question-title">1단계: 연령 확인</div>
-        <label><input type="radio" name="age" value="under"> 만 11세 이하</label>
-        <label><input type="radio" name="age" value="over"> 만 12세 이상</label>
-      </div>
-
-      <div id="q2" class="question hidden">
-        <div class="question-title">2단계: 위험 징후 체크</div>
-        <label><input type="checkbox" name="danger" value="warn"> 심한 구토/복통</label>
-        <label><input type="checkbox" name="danger" value="warn"> 피부에 붉은 발진</label>
-        <label><input type="checkbox" name="danger" value="warn"> 숨이 차거나 호흡 곤란</label>
-        <label><input type="checkbox" name="danger" value="warn"> 39도 이상의 고열이 2일 이상 지속</label>
-        <label><input type="checkbox" name="danger" value="ok"> 없음</label>
-      </div>
-
-      <div id="q3" class="question hidden">
-        <div class="question-title">3단계: 증상 체크</div>
+        <div class="question-title">현재 어떤 증상이 있나요?</div>
         <label><input type="checkbox" name="symptom" value="valid"> 발열</label>
-        <label><input type="checkbox" name="symptom" value="valid"> 감기로 인한 통증</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 감기로 인한 동통</label>
         <label><input type="checkbox" name="symptom" value="valid"> 두통</label>
         <label><input type="checkbox" name="symptom" value="valid"> 신경통/근육통/관절통</label>
         <label><input type="checkbox" name="symptom" value="valid"> 월경통</label>
@@ -109,71 +128,76 @@
         <label><input type="checkbox" name="symptom" value="valid"> 치통</label>
         <label><input type="checkbox" name="symptom" value="valid"> 류마티양으로 인한 통증</label>
         <label><input type="checkbox" name="symptom" value="invalid"> 기타</label>
+        <button type="button" onclick="nextStep(1)">다음</button>
       </div>
 
-      <div id="q4" class="question hidden">
-        <div class="question-title">4단계: 건강 상태 확인</div>
-        <label><input type="checkbox" name="health" value="warn"> 임부/수유부</label>
-        <label><input type="checkbox" name="health" value="warn"> 알코올 복용 여부</label>
-        <label><input type="checkbox" name="health" value="warn"> 만성질환</label>
-        <label><input type="checkbox" name="health" value="warn"> 소염(항염)진통제 복용 여부</label>
-        <label><input type="checkbox" name="health" value="ok"> 없음</label>
+      <div id="q2" class="question hidden">
+        <div class="question-title">현재 이런 위험징후가 있나요?</div>
+        <label><input type="radio" name="danger" value="vomit"> 심한 구토/복통</label>
+        <label><input type="radio" name="danger" value="rash"> 피부에 붉은 발진</label>
+        <label><input type="radio" name="danger" value="breath"> 숨이 차거나 호흡이 어려움</label>
+        <label><input type="radio" name="danger" value="fever"> 39도 이상의 고열이 2일 이상 지속</label>
+        <label><input type="radio" name="danger" value="none"> 없음</label>
+        <button type="button" onclick="nextStep(2)">다음</button>
       </div>
 
-      <div id="result" class="question hidden">
-        <div class="highlight-box">
-          <p class="red-text">‘타이레놀 500mg’을 복용해도 좋습니다.</p>
-          <p class="red-text">1회 1~2정씩 1일 3-4회 (4-6시간 마다) 복용하세요.</p>
-        </div>
-        <p>의사나 약사의 지시 없이 통증에 성인(만 19세 이상)은 10일 이상, 소아(만 19세 미만)는 5일 이상 복용하지 않고, 발열에 3일 이상 복용하지 않습니다.</p>
+      <div id="q3" class="question hidden">
+        <div class="question-title">아래에 해당되는 사항이 있나요?</div>
+        <label><input type="radio" name="health" value="pregnant"> 임부 또는 수유부입니다.</label>
+        <label><input type="radio" name="health" value="chronic"> 만성질환이 있습니다.</label>
+        <label><input type="radio" name="health" value="antiinflammatory"> 최근 소염진통제를 복용했습니다.</label>
+        <label><input type="radio" name="health" value="alcohol"> 최근 알코올 섭취를 했습니다.</label>
+        <label><input type="radio" name="health" value="none"> 없음</label>
+        <button type="button" onclick="showResult()">결과 보기</button>
       </div>
 
-      <div id="ending" class="question hidden">
-        <p>이런 증상은 병원 진료가 필요할 수 있습니다.</p>
-      </div>
-
-      <button type="button" onclick="nextStep()">다음</button>
+      <div id="result" class="hidden result"></div>
     </form>
   </div>
 
+  <div class="footer-warning">
+    ※ 본 페이지는 타이레놀 500mg 정 복용 가능 여부를 사용자 스스로 판단할 수 있도록 돕기 위해 제작된 참고용 자료입니다.<br>
+    정확한 복용 여부는 개인의 건강 상태에 따라 달라질 수 있으므로, 복용 전 의사나 약사와 상담하시는 것을 권장드립니다.
+  </div>
+
   <script>
-    let step = 1;
-
-    function nextStep() {
+    function nextStep(step) {
       if (step === 1) {
-        const age = document.querySelector('input[name="age"]:checked');
-        if (!age) return;
-        if (age.value === "under") return showEnding("만 12세 이상부터 이 약을 복용할 수 있습니다");
-        document.getElementById('q1').classList.add('hidden');
-        document.getElementById('q2').classList.remove('hidden');
-        step++;
-
-      } else if (step === 2) {
-        const danger = [...document.querySelectorAll('input[name="danger"]:checked')];
-        if (danger.some(d => d.value === "warn")) return showEnding();
-        document.getElementById('q2').classList.add('hidden');
-        document.getElementById('q3').classList.remove('hidden');
-        step++;
-
-      } else if (step === 3) {
-        const symptoms = [...document.querySelectorAll('input[name="symptom"]:checked')];
-        if (symptoms.some(s => s.value === "invalid")) return showEnding("지금 이 약을 복용하는 것은 증상 개선에 도움이 되지 않습니다");
-        if (symptoms.length === 0) return;
-        document.getElementById('q3').classList.add('hidden');
-        document.getElementById('q4').classList.remove('hidden');
-        step++;
-
-      } else if (step === 4) {
-        const health = [...document.querySelectorAll('input[name="health"]:checked')];
-        if (health.some(h => h.value === "warn")) return showEnding("복용 전 약사나 의사에게 상의하시기 바랍니다");
-        document.getElementById('q4').classList.add('hidden');
-        document.getElementById('result').classList.remove('hidden');
-        document.querySelector('button').classList.add('hidden');
+        const selected = document.querySelectorAll('input[name="symptom"]:checked');
+        if (selected.length === 0) return alert("하나 이상의 증상을 선택해 주세요.");
+        const hasInvalid = Array.from(selected).some(input => input.value === "invalid");
+        if (hasInvalid) return showFinal("지금 이 약을 복용하는 것이 증상 개선에 큰 도움을 주지 않습니다.<br>약사나 전문가에게 상의 후 복용하는 것을 권장드립니다.");
+        document.getElementById("q1").classList.add("hidden");
+        document.getElementById("q2").classList.remove("hidden");
+      }
+      else if (step === 2) {
+        const selected = document.querySelector('input[name="danger"]:checked');
+        if (!selected) return alert("하나를 선택해 주세요.");
+        if (selected.value !== "none") return showFinal("이런 증상은 병원 진료가 필요할 수 있습니다.<br>복용하지 않는 것을 권장드립니다.");
+        document.getElementById("q2").classList.add("hidden");
+        document.getElementById("q3").classList.remove("hidden");
       }
     }
 
-    function showEnding(msg) {
-      document.getElementById('survey').innerHTML = `<div class='question'><p>${msg || '이런 증상은 병원 진료가 필요할 수 있습니다.'}</p></div>`;
+    function showResult() {
+      const selected = document.querySelector('input[name="health"]:checked');
+      if (!selected) return alert("하나를 선택해 주세요.");
+      let msg = "";
+      if (selected.value === "pregnant") msg = "복용 전 약사나 의사에게 상의하시기 바랍니다.";
+      else if (selected.value === "chronic") msg = "약사나 의사에게 상의하시길 바랍니다.";
+      else if (selected.value === "antiinflammatory") msg = "타이레놀과 소염진통제를 동시 복용하는 것은 권장드리지 않습니다.<br>단, <b>통증</b>의 정도에 따라 교차 복용이 필요할 시 <b>최소 4시간 후</b> 복용하세요.";
+      else if (selected.value === "alcohol") msg = "알코올 섭취 후 오랜 시간이 지나지 않았다면 복용을 권장드리지 않습니다.<br>주의해서 복용하세요.";
+      else msg = `‘타이레놀 500mg 정’을 복용해도 좋습니다. 아래 복용 방법을 준수해 주세요.<div class="highlight-section"><b>통증</b>의 정도에 따라 한 번에 <b>최대 2정씩</b> 복용하실 수 있습니다.<br><b>1일 3~4회</b> 복용 가능하며 <b>최소 4시간의 간격</b>을 두고 복용해 주세요.<br>단, 하루 최대 8정만 복용하세요.</div><div style="margin-top: 16px; line-height: 1.6;">의사나 약사의 지시없이 <b>통증</b>에 만 19세 이상은 10일 이상, 만 19세 미만은 5일 이상 복용하지 않고 <b>발열이 있을 시</b>에 3일 이상 복용하지 마세요.</div>`;
+      showFinal(msg);
+    }
+
+    function showFinal(msg) {
+      document.getElementById("q1").classList.add("hidden");
+      document.getElementById("q2").classList.add("hidden");
+      document.getElementById("q3").classList.add("hidden");
+      const result = document.getElementById("result");
+      result.innerHTML = msg + '<br><br><button onclick="location.reload()">처음으로 돌아가기</button>';
+      result.classList.remove("hidden");
     }
   </script>
 </body>
